@@ -102,3 +102,21 @@ export const getAllCategories = (): string[] => {
     const categories = new Set(PRODUCTS.map(p => p.category));
     return ['all', ...Array.from(categories)];
 };
+
+export const searchProducts = async (query: string): Promise<Product[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const lowerQuery = query.toLowerCase().trim();
+      if (!lowerQuery) {
+          resolve([]);
+          return;
+      }
+      const results = PRODUCTS.filter(p => 
+        p.title.toLowerCase().includes(lowerQuery) || 
+        p.description.toLowerCase().includes(lowerQuery) ||
+        p.category.toLowerCase().includes(lowerQuery)
+      );
+      resolve(results);
+    }, 300);
+  });
+};
